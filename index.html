@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPEA Codex - Consola de Cifrado</title>
+    <link rel="icon" type="image/png" href="image/upea-icono.png">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <span class="terminal-title">UPEA Codex - Consola de Cifrado [Versión 1.0.3]</span>
+            <div class="terminal-buttons">
+                <span class="terminal-btn close-btn"></span>
+                <span class="terminal-btn minimize-btn"></span>
+                <span class="terminal-btn maximize-btn"></span>
+            </div>
+        </div>
+        <div class="terminal-body">
+            <pre id="terminalOutput"></pre>
+            <div class="terminal-input-line">
+                <span class="prompt">upea@codex:~$</span> <input type="text" id="terminalInput" autofocus>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/background-effect.js"></script>
+</body>
+</html>

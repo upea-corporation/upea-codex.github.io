@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPEA Codex - Cifrado GAMMA</title>
+    <link rel="icon" type="image/png" href="../image/upea-icono.png">
+    <link rel="stylesheet" href="../styles/cifrado.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="terminal-container">
+        <div class="terminal-window" id="inputTerminal">
+            <div class="terminal-header">
+                <span class="terminal-title">UPEA_GAMMA_INPUT &gt;</span>
+                <span class="terminal-buttons">
+                    <span class="close-btn"></span>
+                    <span class="minimize-btn"></span>
+                    <span class="maximize-btn"></span>
+                </span>
+            </div>
+            <textarea id="messageInput" class="terminal-textarea" rows="15" spellcheck="false" placeholder="Introduce tu mensaje aquí..."></textarea>
+            <div class="terminal-prompt">
+                <span class="prompt-char">upea@codex:~$</span>
+                <input type="text" id="commandInput" class="command-input" spellcheck="false" placeholder="Escribe 'ENCRYPT' o 'DECRYPT'">
+            </div>
+        </div>
+
+        <div class="terminal-window" id="outputTerminal">
+            <div class="terminal-header">
+                <span class="terminal-title">UPEA_GAMMA_OUTPUT &gt;</span>
+                <span class="terminal-buttons">
+                    <span class="close-btn"></span>
+                    <span class="minimize-btn"></span>
+                    <span class="maximize-btn"></span>
+                </span>
+            </div>
+            <textarea id="resultOutput" class="terminal-textarea" rows="15" spellcheck="false" readonly placeholder="Resultados de la operación..."></textarea>
+        </div>
+    </div>
+
+    <div id="loadingScreen" class="loading-screen hidden">
+        <pre id="loadingText" class="loading-text"></pre>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 UPEA Corp. - Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../scripts/background-effect.js"></script>
+    <script src="../scripts/cipher-common-fx.js"></script>
+    <script src="../scripts/codex-gamma.js"></script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+/* Base para el cuerpo */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Evita scroll */
+    background-color: #000; /* Fondo completamente negro */
+    color: #0F0; /* Texto verde brillante */
+    font-family: 'Space Mono', monospace; /* Fuente retro monoespaciada */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+}
+
+/* Fondo de Matrix (sin cambios significativos) */
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.2; /* Ligeramente más sutil */
+}
+
+/* Ocultamos el header y footer tradicionales si el diseño es solo terminal */
+.terminal-header-wrapper, .slogan {
+    display: none; /* Eliminamos el header principal */
+}
+
+/* Contenedor de las terminales */
+.terminal-container {
+    display: flex;
+    gap: 30px; /* Espacio entre las terminales */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%; /* Ocupa el ancho completo permitido por el padding */
+    max-width: 1400px; /* Ancho máximo para el conjunto de terminales */
+    flex-wrap: wrap; /* Permite que las terminales se apilen en pantallas pequeñas */
+    z-index: 1; /* Por encima del canvas */
+}
+
+/* Ventana de Terminal individual */
+.terminal-window {
+    background-color: #000; /* Negro puro para el interior de la terminal */
+    border: 2px solid #0F0; /* Borde verde brillante */
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.7), inset 0 0 8px rgba(0, 255, 0, 0.3); /* Brillo externo e interno */
+    border-radius: 5px;
+    flex: 1; /* Ocupa espacio disponible */
+    min-width: 350px; /* Ancho mínimo para cada terminal */
+    max-width: 600px; /* Ancho máximo para cada terminal */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+}
+
+/* Cabecera de la ventana de terminal */
+.terminal-header {
+    background-color: #050; /* Verde oscuro para la barra de título */
+    color: #0F0;
+    padding: 8px 10px;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #0F0;
+    text-shadow: 0 0 5px #0F0;
+}
+
+.terminal-title {
+    font-weight: bold;
+}
+
+.terminal-buttons span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+    border: 1px solid #0F0;
+    cursor: default;
+}
+.terminal-buttons .close-btn { background-color: #F00; } /* Rojo */
+.terminal-buttons .minimize-btn { background-color: #FF0; } /* Amarillo */
+.terminal-buttons .maximize-btn { background-color: #0F0; } /* Verde */
+
+/* Área de texto de la terminal */
+.terminal-textarea {
+    flex-grow: 1; /* Ocupa todo el espacio vertical disponible */
+    background-color: transparent; /* Fondo transparente para mostrar el brillo */
+    border: none;
+    color: #0F0;
+    font-family: 'Space Mono', monospace;
+    font-size: 1em;
+    padding: 10px;
+    resize: none; /* No permitir redimensionar por el usuario */
+    outline: none; /* Quitar el contorno al hacer focus */
+    caret-color: #0F0; /* Color del cursor */
+    line-height: 1.4; /* Espaciado entre líneas */
+    -webkit-appearance: none; /* Elimina estilos predeterminados en Safari/Chrome */
+    -moz-appearance: none; /* Elimina estilos predeterminados en Firefox */
+    appearance: none;
+}
+
+.terminal-textarea::placeholder {
+    color: #0A0; /* Placeholder más sutil */
+}
+
+/* Prompt de comando */
+.terminal-prompt {
+    display: flex;
+    align-items: baseline;
+    padding: 8px 10px;
+    border-top: 1px solid #0F0;
+    background-color: #050; /* Verde oscuro para la barra del prompt */
+}
+
+.prompt-char {
+    color: #0F0;
+    margin-right: 5px;
+    font-weight: bold;
+    text-shadow: 0 0 5px #0F0;
+}
+
+.command-input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: #0F0;
+    font-family: 'Space Mono', monospace;
+    font-size: 1em;
+    outline: none;
+    caret-color: #0F0;
+    padding: 0;
+}
+
+.command-input::placeholder {
+    color: #0A0;
+}
+
+
+/* --- PANTALLA DE CARGA (SIMPLIFICADA) --- */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.98); /* Más opaco */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0F0;
+    font-family: 'Space Mono', monospace;
+    font-size: 2em; /* Más grande */
+    text-shadow: 0 0 10px #0F0; /* Brillo para el texto */
+    z-index: 2000; /* Asegura que esté por encima de todo */
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-screen.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.loading-screen.fade-in {
+    opacity: 1;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+}
+
+.loading-text {
+    white-space: pre; /* Mantiene el formato exacto del texto */
+    overflow: hidden; /* Oculta el texto que excede */
+    border-right: .15em solid #0F0; /* Cursor de máquina de escribir */
+    padding-right: 5px;
+    animation: typing 0.5s steps(10, end), blink-caret .75s step-end infinite;
+    max-width: 90%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+/* Animación para el efecto de máquina de escribir */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* Animación para el cursor de máquina de escribir */
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #0F0; }
+}
+
+
+/* Footer */
+.footer {
+    position: fixed; /* Lo fijamos en la parte inferior */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #0C0;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.8em;
+    border-top: 1px solid #0F0;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+    z-index: 10;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1024px) {
+    .terminal-container {
+        flex-direction: column; /* Apila las terminales en pantallas más pequeñas */
+        gap: 20px;
+    }
+    .terminal-window {
+        max-width: 90%; /* Más ancho en modo columna */
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal-window {
+        min-width: 90%;
+        padding: 10px;
+    }
+    .terminal-header {
+        font-size: 0.8em;
+        padding: 6px 8px;
+    }
+    .terminal-buttons span {
+        width: 8px;
+        height: 8px;
+    }
+    .terminal-textarea, .command-input {
+        font-size: 0.9em;
+    }
+    .loading-screen {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-container {
+        padding: 10px;
+    }
+    .terminal-window {
+        min-width: 95%;
+    }
+    .loading-screen {
+        font-size: 1em;
+    }
+    .loading-text {
+        padding-right: 2px;
+        border-right: .1em solid #0F0;
+    }
+}
