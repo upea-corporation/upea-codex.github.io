@@ -17,7 +17,7 @@ body {
 
 /* NUEVO: Estilos para el canvas de fondo */
 #matrixCanvas {
-    position: fixed; /* Cambiado a fixed para asegurar que cubra todo el viewport */
+    position: absolute; /* Posiciona el canvas absolutamente */
     top: 0;
     left: 0;
     width: 100%;
@@ -27,9 +27,9 @@ body {
 }
 
 .terminal-container {
-    width: 90%; /* Ancho base para PC */
-    max-width: 900px; /* Ancho máximo para pantallas grandes */
-    height: 65vh; /* Altura base para PC */
+    width: 90%;
+    max-width: 900px;
+    height: 65vh;
     background-color: rgba(0, 0, 0, 0.96); /* Fondo interior terminal casi opaco para cubrir el fondo */
     border: 2px solid #00ff00;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
@@ -59,9 +59,6 @@ body {
 
 .terminal-title {
     user-select: none;
-    flex-grow: 1; /* Permite que el título ocupe el espacio restante */
-    text-align: center;
-    padding-left: 60px; /* Espacio para los botones ficticios a la izquierda */
 }
 
 .terminal-buttons {
@@ -138,13 +135,6 @@ body {
     font-family: 'VT323', monospace;
     font-size: 1.1em;
     caret-color: #00ff00;
-    /* Deshabilitar resaltado de selección en móviles para evitar problemas visuales */
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 /* styles/main.css - Asegúrate de que estas reglas estén presentes al final */
 
@@ -173,9 +163,9 @@ body.system-compromised {
 .glitch-text {
     font-family: 'VT323', monospace;
     color: #ff0000; /* Rojo brillante */
-    font-size: 5em; /* Tamaño grande para el mensaje SCP (será ajustado en media queries) */
+    font-size: 5em; /* Tamaño grande para el mensaje SCP */
     text-align: center;
-    position: fixed; /* Asegura que esté siempre visible en el viewport */
+    position: fixed; /* Cambiado a fixed para que esté siempre visible en el viewport */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -204,99 +194,18 @@ body.system-compromised {
 /* Ocultar elementos de la terminal cuando está comprometida */
 .terminal-container.system-locked .terminal-body,
 .terminal-container.system-locked .terminal-header,
-.terminal-container.system-locked .terminal-input-line {
+.terminal-container.system-locked .terminal-input-line { /* También ocultar la línea de input */
     pointer-events: none; /* No permite interacciones */
     opacity: 0.1; /* Difumina el contenido aún más */
     transition: opacity 1s ease-in-out;
 }
 
-/* ========================================= */
-/* Media Queries para Responsive Design */
-/* ========================================= */
-
-/* Para tablets y pantallas pequeñas (ej. ancho < 900px, pero > 600px) */
-@media (max-width: 900px) {
-    .terminal-container {
-        width: 95%; /* Más ancho en tablets */
-        height: 80vh; /* Ocupa más altura */
-        max-height: 90vh; /* Asegura que no se desborde en pantallas cortas */
-    }
-
-    #terminalOutput,
-    .prompt,
-    #terminalInput {
-        font-size: 1em; /* Ligeramente más pequeño para tablets */
-    }
-
-    .terminal-header {
-        padding: 8px; /* Ajusta padding del header */
-    }
-
-    .terminal-title {
-        font-size: 0.8em; /* Ajusta el título del header */
-        padding-left: 40px; /* Reduce el padding */
-    }
-
-    .terminal-btn {
-        width: 10px;
-        height: 10px;
-    }
-
-    .glitch-text {
-        font-size: 4em; /* Ajusta el tamaño de SCP para tablets */
-    }
-}
-
-/* Para dispositivos móviles (ej. ancho < 600px) */
-@media (max-width: 600px) {
-    .terminal-container {
-        width: 98%; /* Casi el ancho completo en móviles */
-        height: 90vh; /* Ocupa casi toda la altura */
-        max-height: 95vh;
-        border-width: 1px; /* Borde más fino */
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); /* Sombra más sutil */
-    }
-
-    .terminal-header {
-        padding: 5px 8px; /* Reduce el padding del header */
-    }
-
-    .terminal-title {
-        font-size: 0.65em; /* Título más pequeño en móviles */
-        padding-left: 25px; /* Reduce aún más el padding */
-    }
-
-    .terminal-buttons {
-        gap: 2px; /* Reduce el espacio entre botones */
-    }
-
-    .terminal-btn {
-        width: 8px;
-        height: 8px;
-    }
-
-    #terminalOutput,
-    .prompt,
-    #terminalInput {
-        font-size: 0.85em; /* Fuentes más pequeñas para móviles */
-        line-height: 1.2;
-    }
-
-    .terminal-input-line {
-        margin-top: 5px;
-    }
-
-    .glitch-text {
-        font-size: 2.8em; /* Ajusta el tamaño de SCP para móviles */
-    }
-
-    /* Opcional: Ocultar los botones de la terminal en pantallas muy pequeñas si estorban */
-    /* .terminal-buttons { display: none; } */
-}
-
-/* Para pantallas muy pequeñas, modo retrato en móvil (ej. ancho < 400px) */
-@media (max-width: 400px) {
-    .glitch-text {
-        font-size: 2.2em; /* Un poco más pequeño para los móviles más compactos */
-    }
+/* Asegurar que el canvas de Matrix esté en el fondo y no se vea afectado */
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Envía al fondo */
 }
