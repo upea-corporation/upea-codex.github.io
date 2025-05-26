@@ -15,8 +15,9 @@ body {
     z-index: 0;
 }
 
+/* NUEVO: Estilos para el canvas de fondo */
 #matrixCanvas {
-    position: fixed; /* Asegura que cubra todo el viewport */
+    position: fixed; /* Cambiado a fixed para asegurar que cubra todo el viewport */
     top: 0;
     left: 0;
     width: 100%;
@@ -29,7 +30,7 @@ body {
     width: 90%; /* Ancho base para PC */
     max-width: 900px; /* Ancho máximo para pantallas grandes */
     height: 65vh; /* Altura base para PC */
-    background-color: rgba(0, 0, 0, 0.96); /* Fondo interior terminal casi opaco */
+    background-color: rgba(0, 0, 0, 0.96); /* Fondo interior terminal casi opaco para cubrir el fondo */
     border: 2px solid #00ff00;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
     border-radius: 0;
@@ -41,6 +42,7 @@ body {
     opacity: 1; /* Asegura que la terminal tenga opacidad completa */
 }
 
+/* El resto de tu CSS para la terminal clásica (header, body, etc.) */
 .terminal-header {
     background-color: #000;
     color: #fff;
@@ -50,16 +52,16 @@ body {
     align-items: center;
     border-bottom: 1px solid #00ff00;
     font-size: 0.9em;
-    font-family: Arial, sans-serif; /* Se mantiene Arial para el header */
+    font-family: Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .terminal-title {
     user-select: none;
-    flex-grow: 1;
+    flex-grow: 1; /* Permite que el título ocupe el espacio restante */
     text-align: center;
-    padding-left: 60px; /* Espacio para los botones ficticios */
+    padding-left: 60px; /* Espacio para los botones ficticios a la izquierda */
 }
 
 .terminal-buttons {
@@ -103,6 +105,7 @@ body {
     border: 1px solid #00ff00;
 }
 
+
 #terminalOutput {
     flex-grow: 1;
     white-space: pre-wrap;
@@ -135,6 +138,7 @@ body {
     font-family: 'VT323', monospace;
     font-size: 1.1em;
     caret-color: #00ff00;
+    /* Deshabilitar resaltado de selección en móviles para evitar problemas visuales */
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -142,22 +146,22 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+/* styles/main.css - Asegúrate de que estas reglas estén presentes al final */
 
-/* Efectos de Sistema Comprometido (para el comando exit) */
 body.system-compromised {
-    background-color: #330000;
-    animation: flicker-bg 0.1s infinite alternate;
+    background-color: #330000; /* Fondo rojo oscuro para advertencia */
+    animation: flicker-bg 0.1s infinite alternate; /* Efecto de parpadeo de fondo */
 }
 
 @keyframes flicker-bg {
     0% { background-color: #330000; }
-    100% { background-color: #400000; }
+    100% { background-color: #400000; } /* Ligeramente más claro */
 }
 
 .terminal-container.compromised-border {
-    border: 2px solid #ff0000;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-    animation: border-glitch 0.2s infinite alternate;
+    border: 2px solid #ff0000; /* Borde rojo brillante */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* Sombra roja vibrante */
+    animation: border-glitch 0.2s infinite alternate; /* Parpadeo en el borde */
 }
 
 @keyframes border-glitch {
@@ -168,24 +172,24 @@ body.system-compromised {
 
 .glitch-text {
     font-family: 'VT323', monospace;
-    color: #ff0000;
-    font-size: 5em; /* Ajustado en media queries */
+    color: #ff0000; /* Rojo brillante */
+    font-size: 5em; /* Tamaño grande para el mensaje SCP (será ajustado en media queries) */
     text-align: center;
-    position: fixed;
+    position: fixed; /* Asegura que esté siempre visible en el viewport */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0;
+    opacity: 0; /* Inicialmente oculto */
     animation: show-glitch-text 1s forwards, text-flicker 0.1s infinite alternate;
     text-shadow:
         1px 1px 2px rgba(255,0,0,0.8),
         -1px -1px 2px rgba(0,255,0,0.8),
-        1px -1px 2px rgba(0,0,255,0.8);
-    z-index: 9999;
+        1px -1px 2px rgba(0,0,255,0.8); /* Efecto RGB de glitch */
+    z-index: 9999; /* Asegura que esté por encima de todo */
 }
 
 @keyframes show-glitch-text {
-    0% { opacity: 0; transform: translate(-50%, -100%) scale(0.8); }
+    0% { opacity: 0; transform: translate(-50%, -100%) scale(0.8); } /* Empieza un poco más arriba y pequeño */
     100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
@@ -197,39 +201,40 @@ body.system-compromised {
     100% { opacity: 1; text-shadow: -2px -2px 3px rgba(0,255,0,0.8); }
 }
 
+/* Ocultar elementos de la terminal cuando está comprometida */
 .terminal-container.system-locked .terminal-body,
 .terminal-container.system-locked .terminal-header,
 .terminal-container.system-locked .terminal-input-line {
-    pointer-events: none;
-    opacity: 0.1;
+    pointer-events: none; /* No permite interacciones */
+    opacity: 0.1; /* Difumina el contenido aún más */
     transition: opacity 1s ease-in-out;
 }
 
 /* ========================================= */
-/* Media Queries para Responsive Design (main.css) */
+/* Media Queries para Responsive Design */
 /* ========================================= */
 
-/* Para tablets y pantallas medianas (ej. ancho < 900px, pero > 600px) */
+/* Para tablets y pantallas pequeñas (ej. ancho < 900px, pero > 600px) */
 @media (max-width: 900px) {
     .terminal-container {
         width: 95%; /* Más ancho en tablets */
         height: 80vh; /* Ocupa más altura */
-        max-height: 90vh; /* Asegura que no se desborde */
+        max-height: 90vh; /* Asegura que no se desborde en pantallas cortas */
     }
 
     #terminalOutput,
     .prompt,
     #terminalInput {
-        font-size: 1em; /* Ligeramente más pequeño */
+        font-size: 1em; /* Ligeramente más pequeño para tablets */
     }
 
     .terminal-header {
-        padding: 8px;
+        padding: 8px; /* Ajusta padding del header */
     }
 
     .terminal-title {
-        font-size: 0.8em;
-        padding-left: 40px;
+        font-size: 0.8em; /* Ajusta el título del header */
+        padding-left: 40px; /* Reduce el padding */
     }
 
     .terminal-btn {
@@ -238,31 +243,31 @@ body.system-compromised {
     }
 
     .glitch-text {
-        font-size: 4em; /* Ajusta tamaño SCP */
+        font-size: 4em; /* Ajusta el tamaño de SCP para tablets */
     }
 }
 
 /* Para dispositivos móviles (ej. ancho < 600px) */
 @media (max-width: 600px) {
     .terminal-container {
-        width: 98%;
-        height: 90vh;
+        width: 98%; /* Casi el ancho completo en móviles */
+        height: 90vh; /* Ocupa casi toda la altura */
         max-height: 95vh;
-        border-width: 1px;
-        box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+        border-width: 1px; /* Borde más fino */
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.4); /* Sombra más sutil */
     }
 
     .terminal-header {
-        padding: 5px 8px;
+        padding: 5px 8px; /* Reduce el padding del header */
     }
 
     .terminal-title {
-        font-size: 0.65em;
-        padding-left: 25px;
+        font-size: 0.65em; /* Título más pequeño en móviles */
+        padding-left: 25px; /* Reduce aún más el padding */
     }
 
     .terminal-buttons {
-        gap: 2px;
+        gap: 2px; /* Reduce el espacio entre botones */
     }
 
     .terminal-btn {
@@ -273,23 +278,25 @@ body.system-compromised {
     #terminalOutput,
     .prompt,
     #terminalInput {
-        font-size: 0.85em;
+        font-size: 0.85em; /* Fuentes más pequeñas para móviles */
         line-height: 1.2;
     }
 
     .terminal-input-line {
         margin-top: 5px;
-        padding-top: 5px;
     }
 
     .glitch-text {
-        font-size: 2.8em;
+        font-size: 2.8em; /* Ajusta el tamaño de SCP para móviles */
     }
+
+    /* Opcional: Ocultar los botones de la terminal en pantallas muy pequeñas si estorban */
+    /* .terminal-buttons { display: none; } */
 }
 
 /* Para pantallas muy pequeñas, modo retrato en móvil (ej. ancho < 400px) */
 @media (max-width: 400px) {
     .glitch-text {
-        font-size: 2.2em;
+        font-size: 2.2em; /* Un poco más pequeño para los móviles más compactos */
     }
 }
