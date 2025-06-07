@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    /* Remover 'overflow: hidden;' para permitir scroll */
+    overflow: hidden; /* Evita scroll */
     background-color: #000; /* Fondo completamente negro */
     color: #0F0; /* Texto verde brillante */
     font-family: 'Space Mono', monospace; /* Fuente retro monoespaciada */
@@ -11,11 +11,6 @@ body {
     min-height: 100vh;
     justify-content: center; /* Centra verticalmente */
     align-items: center; /* Centra horizontalmente */
-    /* Permitir scroll vertical si el contenido excede la altura */
-    overflow-y: auto;
-    /* Permitir scroll horizontal si el contenido excede el ancho */
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en iOS */
 }
 
 /* Fondo de Matrix (sin cambios significativos) */
@@ -42,12 +37,10 @@ body {
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
-    width: 100%; /* Asegura que el contenedor intente ocupar el 100% del ancho */
+    width: 100%; /* Ocupa el ancho completo permitido por el padding */
     max-width: 1400px; /* Ancho máximo para el conjunto de terminales */
     flex-wrap: wrap; /* Permite que las terminales se apilen en pantallas pequeñas */
     z-index: 1; /* Por encima del canvas */
-    /* Asegura que el contenedor flex permita que sus hijos no se encojan indefinidamente */
-    min-width: min-content; /* Permite que el contenedor se ajuste al contenido mínimo de sus hijos */
 }
 
 /* Ventana de Terminal individual */
@@ -56,14 +49,12 @@ body {
     border: 2px solid #0F0; /* Borde verde brillante */
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.7), inset 0 0 8px rgba(0, 255, 0, 0.3); /* Brillo externo e interno */
     border-radius: 5px;
-    /* REVERTIR: Usar flex: 1; para que ocupen espacio disponible cuando haya,
-       pero sin forzar el encogimiento excesivo. */
-    flex: 1;
-    min-width: 350px; /* Ancho mínimo para cada terminal, como en el original */
-    max-width: 600px; /* Ancho máximo para cada terminal, como en el original */
+    flex: 1; /* Ocupa espacio disponible */
+    min-width: 350px; /* Ancho mínimo para cada terminal */
+    max-width: 600px; /* Ancho máximo para cada terminal */
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Oculta cualquier desbordamiento interno */
+    overflow: hidden; /* Oculta cualquier desbordamiento */
 }
 
 /* Cabecera de la ventana de terminal */
@@ -168,8 +159,6 @@ body {
     text-shadow: 0 0 10px #0F0; /* Brillo para el texto */
     z-index: 2000; /* Asegura que esté por encima de todo */
     transition: opacity 0.5s ease-out;
-    overflow-y: auto;
-    overflow-x: auto; /* Permitir scroll horizontal en la pantalla de carga */
 }
 
 .loading-screen.hidden {
@@ -194,7 +183,6 @@ body {
     max-width: 90%;
     margin: 0 auto;
     text-align: left;
-    word-wrap: break-word;
 }
 
 /* Animación para el efecto de máquina de escribir */
@@ -231,19 +219,15 @@ body {
     .terminal-container {
         flex-direction: column; /* Apila las terminales en pantallas más pequeñas */
         gap: 20px;
-        /* Remover min-width: min-content si quieres que en pantallas grandes NO se vea el scroll horizontal */
-        min-width: auto; /* Permite que el contenedor se encoja para caber en la pantalla */
     }
     .terminal-window {
         max-width: 90%; /* Más ancho en modo columna */
-        /* Importante: para que se vean compactas horizontalmente en móvil, min-width puede necesitar ser ajustado */
-        min-width: 300px; /* Un valor ligeramente más pequeño para móviles */
     }
 }
 
 @media (max-width: 768px) {
     .terminal-window {
-        min-width: 90%; /* Ajustado para que ocupe más ancho en pantallas pequeñas */
+        min-width: 90%;
         padding: 10px;
     }
     .terminal-header {
@@ -267,7 +251,7 @@ body {
         padding: 10px;
     }
     .terminal-window {
-        min-width: 95%; /* Asegura que la ventana terminal tenga un tamaño decente incluso en los teléfonos más pequeños */
+        min-width: 95%;
     }
     .loading-screen {
         font-size: 1em;
