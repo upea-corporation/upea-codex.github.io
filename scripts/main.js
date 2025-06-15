@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body; // Referencia al body para cambiar el fondo
 
     // Mensaje inicial de la terminal (incluyendo el copyright)
-    const initialMessageContent = `
-UPEA Codex - Sistema de Cifrado Cuántico
+    const initialMessageContent = `UPEA Codex - Sistema de Cifrado Cuántico
 Versión 1.0.3 (Build 250524)
 (c) 2025 UPEA Corp. Todos los derechos reservados.
 
@@ -67,18 +66,18 @@ Escribe 'help' para ver los comandos disponibles.
     const commands = {
         'help': () => {
             addLineToTerminal("Comandos disponibles:");
-            addLineToTerminal("  help       - Muestra esta ayuda.");
-            addLineToTerminal("  list       - Muestra los protocolos de cifrado disponibles.");
-            addLineToTerminal("  clear      - Limpia la consola (mantiene el mensaje de inicio).");
-            addLineToTerminal("  access [protocolo] - Accede a un protocolo de cifrado específico.");
-            addLineToTerminal("  exit       - ¡Advertencia! Finaliza la sesión y compromete el sistema."); // Descripción actualizada
+            addLineToTerminal("  help                   - Muestra esta ayuda.");
+            addLineToTerminal("  list                   - Muestra los protocolos de cifrado disponibles.");
+            addLineToTerminal("  clear                  - Limpia la consola.");
+            addLineToTerminal("  access [protocolo]     - Accede a un protocolo de cifrado específico.");
+            addLineToTerminal("  exit  "); // Descripción actualizada
             addLineToTerminal("\n");
         },
         'list': () => {
             addLineToTerminal("Protocolos de Cifrado UPEA Codex:");
-            addLineToTerminal("  ALFA     (Cifrado de Entidades EAZ)");
-            addLineToTerminal("  BETA     (Protocolo de Interceptación)");
-            addLineToTerminal("  GAMMA    (Secuencia de Datos Anómalos)");
+            addLineToTerminal("  ALPHA      (Cifrado de Entidades EAZ)");
+            addLineToTerminal("  BETA       (Protocolo de Interceptación)");
+            addLineToTerminal("  GAMMA      (Secuencia de Datos Anómalos)");
             addLineToTerminal("\n");
         },
         'clear': () => {
@@ -102,7 +101,8 @@ Escribe 'help' para ver los comandos disponibles.
                     targetUrl = 'codex/protocolo_gamma.html';
                     break;
                 default:
-                    addLineToTerminal(`Error: Protocolo '${protocol}' no reconocido. Use 'list' para ver los disponibles.`);
+                    addLineToTerminal(`Error: Protocolo '${protocol}' no reconocido. Use 'list' para ver los disponibles.
+                        `);
                     return;
             }
 
@@ -123,8 +123,8 @@ Escribe 'help' para ver los comandos disponibles.
                 // Nuevo retardo para la redirección después de que el glitch se vea
                 setTimeout(() => {
                     window.location.href = 'https://scp-wiki.wikidot.com/'; // Redirige a la web oficial de SCP
-                }, 3000); // 3 segundos adicionales para ver el efecto S.C.P.
-            }, 1500); // Dar tiempo a que el mensaje de advertencia se lea antes del glitch
+                }, 1000); // 1 segundos adicionales para ver el efecto S.C.P.
+            }, 500); // Dar tiempo a que el mensaje de advertencia se lea antes del glitch
         }
     };
 
