@@ -79,6 +79,7 @@ Escribe 'help' para ver los comandos disponibles.
             addLineToTerminal("  BETA                   (Protocolo de Interceptación)");
             addLineToTerminal("  GAMMA                  (Secuencia de Datos Anómalos)");
             addLineToTerminal("  EPSILON                (Cifrado de Redes)");
+            addLineToTerminal("  DELTA                  ???");
             addLineToTerminal("\n");
         },
         'clear': () => {
