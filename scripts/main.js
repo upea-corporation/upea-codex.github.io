@@ -75,9 +75,10 @@ Escribe 'help' para ver los comandos disponibles.
         },
         'list': () => {
             addLineToTerminal("Protocolos de Cifrado UPEA Codex:");
-            addLineToTerminal("  ALPHA      (Cifrado de Entidades EAZ)");
-            addLineToTerminal("  BETA       (Protocolo de Interceptación)");
-            addLineToTerminal("  GAMMA      (Secuencia de Datos Anómalos)");
+            addLineToTerminal("  ALPHA                  (Cifrado de Entidades EAZ)");
+            addLineToTerminal("  BETA                   (Protocolo de Interceptación)");
+            addLineToTerminal("  GAMMA                  (Secuencia de Datos Anómalos)");
+            addLineToTerminal("  EPSILON                (Cifrado de Redes)");
             addLineToTerminal("\n");
         },
         'clear': () => {
@@ -90,7 +91,6 @@ Escribe 'help' para ver los comandos disponibles.
             let targetUrl = '';
 
             switch (protocol) {
-                case 'alfa':
                 case 'alpha':
                     targetUrl = 'codex/protocolo_alpha.html';
                     break;
@@ -99,6 +99,12 @@ Escribe 'help' para ver los comandos disponibles.
                     break;
                 case 'gamma':
                     targetUrl = 'codex/protocolo_gamma.html';
+                    break;
+                case 'epsilon':
+                    targetUrl = 'codex/protocolo_epsilon.html';
+                    break;
+                case 'delta':
+                    targetUrl = 'codex/protocolo_delta.html';
                     break;
                 default:
                     addLineToTerminal(`Error: Protocolo '${protocol}' no reconocido. Use 'list' para ver los disponibles.
