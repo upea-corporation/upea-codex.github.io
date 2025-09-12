@@ -115,12 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- MANEJO DE COMANDOS EN EL INPUT ---
-    commandInput.addEventListener('keydown', async (event) => {
+// --- MANEJO DE COMANDOS EN EL INPUT ---
+    commandInput.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
             const command = commandInput.value.trim().toUpperCase();
-            let message = messageInput.value;
+            const message = messageInput.value;
 
             commandInput.value = '';
 
@@ -129,34 +129,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // Deshabilitar los campos para evitar múltiples comandos a la vez
             messageInput.disabled = true;
             commandInput.disabled = true;
 
-            resultOutput.value = ` [UPEA_SYS] Enviando comando '${command}' a UPEA_SERVER...`;
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // Iniciar la animación de carga inmediatamente en la caja de resultados
+            let loadingDots = '';
+            let dotCount = 0;
+            const loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4; // Ciclo de 0 a 3
+                loadingDots = '.'.repeat(dotCount);
+                resultOutput.value = ` [UPEA_SYS] Protocolo Epsilon en proceso${loadingDots}`;
+            }, 500); // Actualiza cada 0.5 segundos
 
-            switch (command) {
-                case 'ENCRYPT':
-                    resultOutput.value = "";
-                    await window.showLoadingScreen('CIFRADO EPSILON');
-                    const encryptedMessageWithPrefix = encryptUPEAEpsilon(message);
-                    resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX_EPSILON.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX_EPSILON.length);
-                    break;
-                case 'DECRYPT':
-                    resultOutput.value = "";
-                    await window.showLoadingScreen('DESCIFRADO EPSILON');
-                    const messageForDecryption = `${ENCRYPTED_PREFIX_EPSILON}${message}${ENCRYPTED_SUFFIX_EPSILON}`;
-                    const decryptedMessage = decryptUPEAEpsilon(messageForDecryption);
-                    resultOutput.value = decryptedMessage;
-                    break;
-                default:
-                    resultOutput.value = ` [UPEA_SYS] ERROR: Comando desconocido '${command}'. Use 'ENCRYPT' o 'DECRYPT'.`;
-                    break;
-            }
-            
-            messageInput.disabled = false;
-            commandInput.disabled = false;
-            commandInput.focus();
+            // Usar setTimeout para ejecutar el proceso después del tiempo de espera aleatorio
+            const randomDelay = Math.floor(Math.random() * (15000 - 1000 + 1)) + 1000;
+            setTimeout(() => {
+                // Detener la animación de carga
+                clearInterval(loadingInterval);
+                
+                // Procesar el comando
+                switch (command) {
+                    case 'ENCRYPT':
+                        const encryptedMessageWithPrefix = encryptUPEA(message);
+                        resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX.length);
+                        break;
+                    case 'DECRYPT':
+                        const messageForDecryption = `${ENCRYPTED_PREFIX}${message}${ENCRYPTED_SUFFIX}`;
+                        const decryptedMessage = decryptUPEA(messageForDecryption);
+                        resultOutput.value = decryptedMessage;
+                        break;
+                    default:
+                        resultOutput.value = ` [UPEA_SYS] ERROR: Comando desconocido '${command}'. Use 'ENCRYPT' o 'DECRYPT'.`;
+                        break;
+                }
+                
+                // Habilitar los campos y devolver el foco al input
+                messageInput.disabled = false;
+                commandInput.disabled = false;
+                commandInput.focus();
+            }, randomDelay); 
         }
     });
 
