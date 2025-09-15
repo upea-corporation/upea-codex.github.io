@@ -15,14 +15,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // Combinación única para el guion
     const DASH_CODE = 'Z9';
 
+    // Mapeo para caracteres especiales
+    const specialCharMapEncrypt = {
+        '¡': 'S1', '!': 'S2',
+        '¿': 'S3', '?': 'S4'
+    };
+
+    // Mapeo inverso para caracteres especiales
+    const specialCharMapDecrypt = {
+        'S1': '¡', 'S2': '!',
+        'S3': '¿', 'S4': '?'
+    };
+
     // --- FUNCIONES DE CODIFICACIÓN ---
 
     // Paso 1: Convertir Letras a Números Pares/Impares y Números a Letras
     function transformInput(text) {
         let transformed = '';
         for (const char of text) {
+            // Patrón 0: Manejar el guion y los nuevos símbolos
             if (char === '-') {
                 transformed += DASH_CODE;
+                continue;
+            } else if (specialCharMapEncrypt[char]) {
+                transformed += specialCharMapEncrypt[char];
                 continue;
             }
             
@@ -80,13 +96,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const char1 = transformedText[i];
             const char2 = transformedText[i + 1];
 
-            // Patrón 0: Manejar el guion
-            if (char1 === 'Z' && char2 === '9') {
+            // Patrón 0: Manejar el guion y los nuevos símbolos
+            let foundSpecial = false;
+            const twoChar = `${char1}${char2}`;
+            if (twoChar === DASH_CODE) {
                 originalText += '-';
                 i += 2;
+                foundSpecial = true;
+            } else if (specialCharMapDecrypt[twoChar]) {
+                originalText += specialCharMapDecrypt[twoChar];
+                i += 2;
+                foundSpecial = true;
             }
+            if (foundSpecial) {
+                continue;
+            }
+
             // Patrón 1: Dos números (ej. '00', '02') -> Letra
-            else if (NUMBER_ALPHABET.includes(char1) && NUMBER_ALPHABET.includes(char2)) {
+            if (NUMBER_ALPHABET.includes(char1) && NUMBER_ALPHABET.includes(char2)) {
                 const codedNumber = parseInt(`${char1}${char2}`, 10);
                 const letterIndex = Math.floor(codedNumber / 2);
                 const isUpperCase = (codedNumber % 2 !== 0);
@@ -100,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 i += 2;
             } 
             // Patrón 2: Dos letras (ej. 'AA', 'AB') -> Número
-            else if (CAESAR_ALPHABET.includes(char1) && CAESAR_ALPHABET.includes(char2)) {
+            else if (LETTER_ALPHABET.includes(char1.toLowerCase()) && LETTER_ALPHABET.includes(char2.toLowerCase())) {
                 const firstIndex = LETTER_ALPHABET.indexOf(char1.toLowerCase());
                 const secondIndex = LETTER_ALPHABET.indexOf(char2.toLowerCase());
                 if (firstIndex !== -1 && secondIndex !== -1) {
@@ -188,12 +215,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Procesar el comando
                 switch (command) {
                     case 'ENCRYPT':
-                        const encryptedMessageWithPrefix = encryptUPEA(message);
-                        resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX.length);
+                        const encryptedMessageWithPrefix = encryptUPADelta(message);
+                        resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX_DELTA.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX_DELTA.length);
                         break;
                     case 'DECRYPT':
-                        const messageForDecryption = `${ENCRYPTED_PREFIX}${message}${ENCRYPTED_SUFFIX}`;
-                        const decryptedMessage = decryptUPEA(messageForDecryption);
+                        const messageForDecryption = `${ENCRYPTED_PREFIX_DELTA}${message}${ENCRYPTED_SUFFIX_DELTA}`;
+                        const decryptedMessage = decryptUPADelta(messageForDecryption);
                         resultOutput.value = decryptedMessage;
                         break;
                     default:

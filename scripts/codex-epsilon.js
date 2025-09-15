@@ -151,12 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Procesar el comando
                 switch (command) {
                     case 'ENCRYPT':
-                        const encryptedMessageWithPrefix = encryptUPEA(message);
-                        resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX.length);
+                        const encryptedMessageWithPrefix = encryptUPEAEpsilon(message);
+                        resultOutput.value = encryptedMessageWithPrefix.substring(ENCRYPTED_PREFIX_EPSILON.length, encryptedMessageWithPrefix.length - ENCRYPTED_SUFFIX_EPSILON.length);
                         break;
                     case 'DECRYPT':
-                        const messageForDecryption = `${ENCRYPTED_PREFIX}${message}${ENCRYPTED_SUFFIX}`;
-                        const decryptedMessage = decryptUPEA(messageForDecryption);
+                        const messageForDecryption = `${ENCRYPTED_PREFIX_EPSILON}${message}${ENCRYPTED_SUFFIX_EPSILON}`;
+                        const decryptedMessage = decryptUPEAEpsilon(messageForDecryption);
                         resultOutput.value = decryptedMessage;
                         break;
                     default:
