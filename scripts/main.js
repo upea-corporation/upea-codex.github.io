@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mensaje inicial de la terminal (incluyendo el copyright)
     const initialMessageContent = `UPEA Codex - Sistema de Cifrado Cuántico
 Versión 2.70520.25 (Build 173343)
-(c) 2028 UPEA Corp. Todos los derechos reservados.
+(c) 2026 UPEA Corp. Todos los derechos reservados.
 
 Escribe 'help' para ver los comandos disponibles.
 `;
